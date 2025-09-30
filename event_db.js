@@ -17,7 +17,7 @@ var dbDetails = require("./db-details");
 // });
 
 module.exports = {
-	getconnection: ()=>{
+	getConnection: ()=>{
 	return mysql.createConnection({
 		host:dbDetails.host,
 		user:dbDetails.user,
