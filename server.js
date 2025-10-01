@@ -5,9 +5,13 @@
  * @LastEditTime: 2025-09-30 10:44:33
  * @FilePath: \Web-DevII-A2\server.js
  */
-var express = require('express');
-var app = express();
-var eventAPI = require("./API/api-controller");
+const express = require('express');
+const app = express();
+const eventAPI = require("./API/api-controller");
+
+const cors = require("cors");
+
+app.use(cors())
 
 app.use("/api/events", eventAPI);
 app.listen(3060);
