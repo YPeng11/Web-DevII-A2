@@ -7,19 +7,27 @@
  */
 var dbcon = require("../event_db");
 var connection = dbcon.getConnection();
+
 connection.connect();
 
 var express = require('express');
 var router = express.Router();
 
-router.get("/", (req, res)=>{
-	connection.query("select * from events", (err, records,fields)=> {
-		 if (err){
-			 console.error("Error while retrieve the data");
-		 }else{
-			 res.send(records);
-		 }
-	})
+router.get("/", (req, res) => {
+	connection.query(`
+		SELECT events.*, 
+            organization.name as organization_name,
+            organization.email as organization_email
+        FROM events 
+        LEFT JOIN organization ON events.organizer_id = organization.id
+		`, (err, records, fields) => {
+			if (err) {
+				console.error("Error while retrieve the data");
+			} else {
+				res.json(records);
+			}
+		})
 })
+
 
 module.exports = router;
