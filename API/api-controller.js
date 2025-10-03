@@ -17,10 +17,33 @@ router.get("/", (req, res) => {
 	connection.query(`
 		SELECT events.*, 
             organization.name as organization_name,
-            organization.email as organization_email
+            organization.email as organization_email,
+			categories.name as category_name
         FROM events 
         LEFT JOIN organization ON events.organizer_id = organization.id
+		LEFT JOIN categories ON events.category_id = categories.id
 		`, (err, records, fields) => {
+			if (err) {
+				console.error("Error while retrieve the data");
+			} else {
+				res.json(records);
+			}
+		})
+})
+
+router.get("/detail/:id", (req, res) => {
+	const eventId = req.params.id;
+
+	connection.query(`
+		SELECT events.*, 
+            organization.name as organization_name,
+            organization.email as organization_email,
+			categories.name as category_name
+        FROM events 
+        LEFT JOIN organization ON events.organizer_id = organization.id
+		LEFT JOIN categories ON events.category_id = categories.id
+		WHERE events.id = ?
+		`, eventId, (err, records, fields) => {
 			if (err) {
 				console.error("Error while retrieve the data");
 			} else {
