@@ -4,78 +4,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>爱心慈善 - 主页</title>
+    <title>Charity Events</title>
     <link rel="stylesheet" href="css/css.css">
 </head>
 
 <body>
-    <!-- 导航栏 -->
     <header>
         <div class="container">
             <nav>
-                <div class="logo">爱心慈善</div>
+                <div class="logo">Love Charity</div>
                 <div class="nav-links">
-                    <a href="index.html">首页</a>
-                    <a href="search.html">搜索活动</a>
-                    <a href="event-detail.html">活动详情</a>
+                    <a href="index.html">Home</a>
+                    <a href="search.html">Search Event</a>
+                    <a href="event-detail.html">About Us</a>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- 主横幅 -->
     <section class="hero">
         <div class="container">
-            <h1>爱心慈善组织</h1>
-            <p>我们致力于通过慈善活动帮助需要帮助的人们，创造更美好的社会。</p>
-            <a href="#events" class="btn">查看活动</a>
+            <h1>Charity Organization</h1>
+            <p>We are committed to helping people in need through charity activities and creating a better society.</p>
         </div>
     </section>
 
 
-    <!-- 活动列表 -->
     <section class="section" id="events">
         <div class="container">
-            <h2 class="section-title">慈善活动</h2>
+            <h2 class="section-title">Charity Events</h2>
             <div class="events-container" id="events-container">
-                <!-- 活动卡片将通过JavaScript动态生成 -->
             </div>
         </div>
     </section>
 
-    <!-- 关于我们 -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">关于我们</h2>
-            <p>爱心慈善组织成立于2010年，是一个非营利性公益组织，致力于通过各类慈善活动改善弱势群体的生活状况。我们的使命是传递爱心，创造希望，让每个人都能享有平等的发展机会。</p>
-            <p>在过去十年中，我们成功举办了数百场慈善活动，帮助了成千上万需要帮助的人们。我们的项目涵盖教育支持、医疗援助、灾难救助和社区发展等多个领域。</p>
+            <h2 class="section-title">About Us</h2>
+            <p>Charity Organization, A non-profit organization, is committed to improving the living conditions of
+                vulnerable groups through various charitable activities. Our mission is to convey love, create hope, and
+                allow everyone to enjoy equal development opportunities.</p>
+            <p>In the past years, we have successfully held hundreds of charity events and helped thousands of people in
+                need. Our projects cover multiple areas such as educational support, medical assistance, disaster relief
+                and community development.</p>
         </div>
     </section>
 
-    <!-- 页脚 -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>联系我们</h3>
-                    <p>电话: (123) 456-7890</p>
-                    <p>邮箱: info@charity.org</p>
-                    <p>地址: 北京市朝阳区慈善路123号</p>
+                    <h3>Contact us</h3>
+                    <p>Tel: (123) 456-7890</p>
+                    <p>Email: charity@charity.com</p>
+                    <p>Address: No. 123 Charity Road, Liuzhou City, Guangxi Zhuang Autonomous Region</p>
                 </div>
                 <div class="footer-section">
-                    <h3>快速链接</h3>
-                    <a href="index.html">首页</a><br>
-                    <a href="search.html">搜索活动</a><br>
-                    <a href="event-detail.html">活动详情</a>
+                    <h3>Quick Links</h3>
+                    <a href="index.html" style="color: white;">Home</a><br>
+                    <a href="search.html" style="color: white;">Search</a><br>
                 </div>
                 <div class="footer-section">
-                    <h3>关注我们</h3>
-                    <p>微信公众号: 爱心慈善</p>
-                    <p>微博: @爱心慈善官方</p>
+                    <h3>About Us</h3>
+                    <p>A non-profit organization</p>
+                    <p>Our mission is to convey love, create hope, and allow everyone to enjoy equal development
+                        opportunities.</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 爱心慈善组织. 保留所有权利.</p>
+                <p>&copy; 2025 Love Charity.</p>
             </div>
         </div>
     </footer>
@@ -87,49 +84,48 @@
             try {
                 const response = await fetch('http://localhost:3060/api/events');
                 if (!response.ok) {
-                    throw new Error('网络响应不正常');
+                    throw new Error('The network response is abnormal');
                 }
                 const events = await response.json();
                 renderEvents(events);
             } catch (error) {
-                console.error('获取活动数据时出错:', error);
-                // 可以在这里添加错误处理，比如显示错误信息
-                eventsContainer.innerHTML = '<p>无法加载活动数据，请稍后重试。</p>';
+                console.error('Error getting event data:', error);
+                eventsContainer.innerHTML = '<p>Unable to load activity data. Please try again later.</p>';
             }
         }
-        // 获取活动容器
+        // get container
         const eventsContainer = document.getElementById('events-container');
 
-        // 渲染活动卡片
+        // renderContainer
         function renderEvents(events) {
-            // 清空容器
+
             eventsContainer.innerHTML = '';
 
-            // 过滤掉不合法活动（状态为0）
-            const validEvents = events.filter(event => event.status === "1");
+            // filter ban_status=1
+            const validEvents = events.filter(event => event.ban_status === 1);
 
             if (validEvents.length === 0) {
-                eventsContainer.innerHTML = '<p>暂无活动数据。</p>';
+                eventsContainer.innerHTML = '<p>No event data is available.</p>';
                 return;
             }
 
-            // 对活动按日期排序
+            // sort by date
             validEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            // 创建活动卡片
+            // create event carc by result
             validEvents.forEach(event => {
                 const eventDate = new Date(event.date);
                 const today = new Date();
-                today.setHours(0, 0, 0, 0);
+                // today.setHours(0, 0, 0, 0);
 
-                // 确定活动状态
+                // 根据数据库中的状态字段确定活动状态
                 let statusClass, statusText;
-                if (eventDate < today) {
+                if (event.event_status === 0) {
                     statusClass = 'status-past';
-                    statusText = '已结束';
-                } else {
+                    statusText = 'Past';
+                } else if (event.event_status === 1) {
                     statusClass = 'status-upcoming';
-                    statusText = '即将开始';
+                    statusText = 'Ongoing';
                 }
 
                 // 格式化日期
@@ -143,9 +139,14 @@
                         <div class="event-name">${event.name}</div>
                         <div class="event-organization">${event.organization_name}</div>
                         <p>${event.detail}</p>
-                        <div class="event-date">${formattedDate}</div>
-                        <div class="event-status ${statusClass}">${statusText}</div>
-                        <a href="event-detail.html?id=${event.id}" class="btn">查看详情</a>
+                        <div class="event-footer">
+                            <div class="event-date">${formattedDate}</div>
+                            <div class="event-actions">
+                                <span class="event-status ${statusClass}">${statusText}</span>
+                                <a href="detail.html?id=${event.id}" class="btn">查看详情</a>
+                            </div>
+                        
+                        </div>
                     `;
 
                 eventsContainer.appendChild(eventCard);
