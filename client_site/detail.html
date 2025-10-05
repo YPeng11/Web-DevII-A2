@@ -97,10 +97,10 @@
             const eventsContainer = document.getElementById('events-container');
             eventsContainer.innerHTML = '';
 
-            // 计算筹款进度百分比
+            // Calculate event progress percentage
             const completionRate = (data.price / data.target_price) * 100;
             
-            // 设置活动状态
+            // event status
             const isActive = data.event_status === 1;
             const statusText = isActive ? "Ongoing" : "Past";
             const statusClass = isActive ? "status-ongoing" : "status-ended";
@@ -112,7 +112,7 @@
             const eventDate = new Date(data.date);
 
 
-            // 格式化日期
+            // format date
             const formattedDate = `${eventDate.getFullYear()}/${eventDate.getMonth() + 1}/${eventDate.getDate()}`;
 
             console.log(data)
@@ -129,56 +129,57 @@
                 
                 <div class="event-info">
                     <div class="info-section">
-                        <h3 class="info-title">活动信息</h3>
+                        <h3 class="info-title">Event Detail</h3>
                         <div class="info-grid">
                             <div class="info-item">
-                                <span class="info-label">活动日期</span>
+                                <span class="info-label">Event Date</span>
                                 <span class="info-value">${formattedDate}</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label"></i> 活动类别</span>
-                                <span class="info-value">${data.category_name || '未分类'}</span>
+                                <span class="info-label"> Category</span>
+                                <span class="info-value">${data.category_name || 'Uncategorized'}</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">组织者</span>
-                                <span class="info-value">${data.organizer_name || '未知组织者'}</span>
+                                <span class="info-label">Orgazation</span>
+                                <span class="info-value">${data.organization_name || 'unknown organization'}</span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="info-section">
-                        <h3 class="info-title">筹款进度</h3>
+                        <h3 class="info-title">Event Progress </h3>
                        
                         <div class="fundraising-numbers">
                             <div class="number-item">
                                 <div class="number-value">$${data.price}</div>
-                                <div class="number-label">已筹金额</div>
+                                <div class="number-label">Current Amount</div>
                             </div>
                             <div class="number-item">
                                 <div class="number-value">$${data.target_price}</div>
-                                <div class="number-label">目标金额</div>
+                                <div class="number-label">Target Amount</div>
                             </div>
                             <div class="number-item">
                                 <div class="number-value">${completionRate.toFixed(1)}%</div>
-                                <div class="number-label">完成度</div>
+                                <div class="number-label">Completeness</div>
                             </div>
                         </div>
+                        <div class="action-buttons">
+                    <button class="donate-btn" id="donateButton" ${isActive ? '' : 'disabled'}>
+                        <i class="fas fa-heart"></i> ${isActive ? 'Donation Now' : 'Event Past'}
+                    </button>
+                    
+                </div>
                     </div>
                 </div>
                 
                 <div class="event-detail">
-                    <h3 class="info-title">活动详情</h3>
+                    <h3 class="info-title">Event  Description</h3>
                     <div class="detail-content">
                         ${data.detail}
                     </div>
                 </div>
                 
-                <div class="action-buttons">
-                    <button class="donate-btn" id="donateButton" ${isActive ? '' : 'disabled'}>
-                        <i class="fas fa-heart"></i> ${isActive ? '立即捐赠' : '活动已结束'}
-                    </button>
-                    
-                </div>
+                
                     `;
 
         }

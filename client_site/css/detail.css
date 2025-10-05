@@ -1,4 +1,4 @@
-  /* 活动详情样式 - 简单布局 */
+
         .event-header {
             background-color: white;
             padding: 20px;
@@ -103,7 +103,7 @@
             color: #7f8c8d;
         }
         
-        /* 活动详情 */
+
         .event-detail {
             background-color: white;
             padding: 20px;
@@ -117,7 +117,7 @@
             color: #34495e;
         }
         
-        /* 按钮 */
+
         .action-buttons {
             display: flex;
             gap: 15px;
@@ -125,7 +125,7 @@
         }
         
         .donate-btn {
-            flex: 1;
+            flex: auto;
             padding: 15px;
             background-color: #e74c3c;
             color: white;
