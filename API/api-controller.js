@@ -47,7 +47,7 @@ router.get("/detail/:id", (req, res) => {
 			if (err) {
 				console.error("Error while retrieve the data");
 			} else {
-				res.json(records);
+				res.json(records[0]);
 			}
 		})
 })
