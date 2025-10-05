@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Events</title>
+    <link rel="stylesheet" href="css/css.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Love Charity</div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="search.html">Search Event</a>
+                    <a href="event-detail.html">About Us</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Charity Organization</h1>
+            <p>We are committed to helping people in need through charity activities and creating a better society.</p>
+        </div>
+    </section>
+
+
+    <section class="section" id="events">
+        <div class="container">
+            <h2 class="section-title">Charity Events</h2>
+            <div class="events-container" id="events-container">
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact us</h3>
+                    <p>Tel: (123) 456-7890</p>
+                    <p>Email: charity@charity.com</p>
+                    <p>Address: No. 123 Charity Road, Liuzhou City, Guangxi Zhuang Autonomous Region</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="index.html" style="color: white;">Home</a><br>
+                    <a href="search.html" style="color: white;">Search</a><br>
+                </div>
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>A non-profit organization</p>
+                    <p>Our mission is to convey love, create hope, and allow everyone to enjoy equal development
+                        opportunities.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Love Charity</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            //get event id
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            console.log('id',eventId)
+
+            if (eventId) {
+                loadEventDetails(eventId);
+            } else {
+                document.getElementById('events-description').innerHTML = ` No event id...`;
+            }
+        });
+        // 从API获取数据
+        async function loadEventDetails(eventId) {
+            try {
+                const response = await fetch(`http://localhost:3060/api/events/detail/${eventId}`);
+                if (!response.ok) {
+                    throw new Error('The network response is abnormal');
+                }
+                const event = await response.json();
+                renderEventDetails(event);
+            } catch (error) {
+                console.error('Error getting event data:', error);
+                eventsContainer.innerHTML = '<p>Unable to load activity data. Please try again later.</p>';
+            }
+        }
+
+
+        // renderContainer
+        function renderEventDetails(event) {
+
+            // get container
+            const eventsContainer = document.getElementById('events-container');
+
+            eventsContainer.innerHTML = '';
+
+            if (!event || Object.keys(event).length === 0) {
+                eventsContainer.innerHTML = '<p>No event data is available.</p>';
+                return;
+            }
+            const eventDate = new Date(event.date);
+
+
+
+            // 根据数据库中的状态字段确定活动状态
+            let statusClass, statusText;
+            if (event.event_status === 0) {
+                statusClass = 'status-past';
+                statusText = 'Past';
+            } else if (event.event_status === 1) {
+                statusClass = 'status-upcoming';
+                statusText = 'Ongoing';
+            }
+
+            // 格式化日期
+            const formattedDate = `${eventDate.getFullYear()}/${eventDate.getMonth() + 1}/${eventDate.getDate()}`;
+
+            console.log(event)
+
+            eventsContainer.innerHTML = `
+                        
+                        <div class="event-name">${event.name}</div>
+                        <div class="event-organization">${event.organization_name}</div>
+                        <p>${event.detail}</p>
+                        <div class="event-footer">
+                            <div class="event-date">${formattedDate}</div>
+                            <div class="event-actions">
+                                <span class="event-status ${statusClass}">${statusText}</span>
+                                <a href="event-detail.html?id=${event.id}" class="btn">查看详情</a>
+                            </div>
+                        
+                        </div>
+                    `;
+
+        }
+
+    </script>
+</body>
+
+</html>
