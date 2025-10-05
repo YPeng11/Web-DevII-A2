@@ -145,7 +145,7 @@
       font-weight: 500;
   }
 
-  .status-upcoming {
+  .status-ongoing {
       background-color: #e8f5e9;
       color: #2e7d32;
   }
@@ -269,16 +269,6 @@
             display: flex;
             gap: 15px;
             margin-top: 25px;
-        }
-        
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
         }
         
         .btn-primary {
