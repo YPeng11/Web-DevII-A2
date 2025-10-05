@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Events</title>
+    <link rel="stylesheet" href="css/css.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Love Charity</div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="search.html">Search Event</a>
+                    <a href="#">About Us</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Search Event</h2>
+            
+            <form class="search-form" id="searchForm">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="date"> Date</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="location"> Location</label>
+                        <input type="text" id="location" name="location" placeholder="Please Input City">
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">所有类别</option>
+                            <option value="1">教育资助</option>
+                            <option value="2">老人关怀</option>
+                            <option value="3">医疗救助</option>
+                            <option value="4">环境保护</option>
+                            <option value="5">灾害救援</option>
+                            <option value="7">动物保护</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> 搜索活动
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="clearFilters">
+                        <i class="fas fa-times"></i> 清除筛选
+                    </button>
+                </div>
+            </form>
+            
+            <!-- 错误消息区域 -->
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            
+            <!-- 搜索结果区域 -->
+            <div class="results-container">
+                <div class="results-header">
+                    <div class="results-count" id="resultsCount">找到 0 个活动</div>
+                </div>
+                
+                <div id="resultsContent">
+                    <!-- 初始状态显示提示 -->
+                    <div class="no-results">
+                        <i class="fas fa-search fa-3x" style="margin-bottom: 15px; color: #ddd;"></i>
+                        <p>使用上方的筛选条件搜索活动</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p>电话: (123) 456-7890</p>
+                    <p>邮箱: charity@charity.com</p>
+                    <p>地址: 广西壮族自治区柳州市慈善路123号</p>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <a href="index.html">首页</a>
+                    <a href="search.html">活动搜索</a>
+                    <a href="about.html">关于我们</a>
+                </div>
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>非营利组织</p>
+                    <p>我们的使命是传递爱心，创造希望，让每个人都能享有平等的发展机会。</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Love Charity 爱心慈善</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 模拟活动数据
+        const mockEvents = [
+            {
+                id: 1,
+                name: "爱心助学计划",
+                date: "2025-06-15",
+                location: "广西壮族自治区",
+                category: "教育资助",
+                organization: "爱心教育基金会",
+                description: "为山区贫困学生提供学费、书本费和营养补助，帮助孩子们完成学业梦想",
+                status: "已结束"
+            },
+            {
+                id: 2,
+                name: "温暖冬日行动",
+                date: "2025-11-20",
+                location: "北京市",
+                category: "老人关怀",
+                organization: "温暖老人关怀中心",
+                description: "为社区孤寡老人提供冬季衣物、取暖设备和日常用品，让老人们温暖过冬",
+                status: "进行中"
+            },
+            {
+                id: 3,
+                name: "医疗救助基金",
+                date: "2025-07-11",
+                location: "上海市",
+                category: "医疗救助",
+                organization: "健康医疗救助协会",
+                description: "为贫困家庭的困难患者提供手术的治疗费用支持，挽救生命守护健康",
+                status: "已结束"
+            },
+            {
+                id: 4,
+                name: "环保公益行",
+                date: "2025-09-28",
+                location: "广东省深圳市",
+                category: "环境保护",
+                organization: "绿色环保联盟",
+                description: "组织志愿者进行垃圾分类、植树造林等环保活动，共建绿色家园",
+                status: "进行中"
+            },
+            {
+                id: 5,
+                name: "灾区紧急救援",
+                date: "2025-10-07",
+                location: "四川省",
+                category: "灾害救援",
+                organization: "紧急救援基金会",
+                description: "为近期洪涝灾害受灾群众提供食品、饮用水和临时住宿，紧急救助受灾同胞",
+                status: "进行中"
+            },
+            {
+                id: 6,
+                name: "爱心图书馆",
+                date: "2025-11-28",
+                location: "云南省",
+                category: "教育资助",
+                organization: "爱心教育基金会",
+                description: "在偏远地区学校建立爱心图书室，提供图书和学习资料，丰富孩子们的阅读生活",
+                status: "进行中"
+            },
+            {
+                id: 7,
+                name: "残疾人就业培训",
+                date: "2025-10-24",
+                location: "浙江省杭州市",
+                category: "教育资助",
+                organization: "希望就业援助中心",
+                description: "为残疾人提供职业技能培训，帮助他们获得就业机会，实现自我价值",
+                status: "进行中"
+            },
+            {
+                id: 8,
+                name: "流浪动物救助",
+                date: "2025-11-27",
+                location: "江苏省南京市",
+                category: "动物保护",
+                organization: "动物保护协会",
+                description: "救助流浪猫狗，提供医疗、教育和领养服务，给流浪动物一个温暖的家",
+                status: "进行中"
+            }
+        ];
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchForm = document.getElementById('searchForm');
+            const clearFiltersBtn = document.getElementById('clearFilters');
+            const errorMessage = document.getElementById('errorMessage');
+            const resultsContent = document.getElementById('resultsContent');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            // 表单提交事件
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 获取表单数据
+                const formData = new FormData(searchForm);
+                const date = formData.get('date');
+                const location = formData.get('location');
+                const category = formData.get('category');
+                
+                // 显示加载状态
+                resultsContent.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在搜索活动...</div>';
+                
+                // 模拟API请求延迟
+                setTimeout(() => {
+                    // 搜索活动
+                    const results = searchEvents(date, location, category);
+                    
+                    // 显示结果
+                    displayResults(results);
+                    
+                    // 更新结果计数
+                    resultsCount.textContent = `找到 ${results.length} 个活动`;
+                    
+                    // 隐藏错误消息
+                    errorMessage.style.display = 'none';
+                }, 800);
+            });
+            
+            // 清除筛选按钮事件
+            clearFiltersBtn.addEventListener('click', function() {
+                searchForm.reset();
+                resultsContent.innerHTML = '<div class="no-results"><i class="fas fa-search fa-3x" style="margin-bottom: 15px; color: #ddd;"></i><p>使用上方的筛选条件搜索活动</p></div>';
+                resultsCount.textContent = '找到 0 个活动';
+                errorMessage.style.display = 'none';
+            });
+            
+            // 搜索活动函数
+            function searchEvents(date, location, category) {
+                return mockEvents.filter(event => {
+                    // 日期筛选
+                    if (date && event.date !== date) {
+                        return false;
+                    }
+                    
+                    // 地点筛选
+                    if (location && !event.location.includes(location)) {
+                        return false;
+                    }
+                    
+                    // 类别筛选
+                    if (category && event.category !== getCategoryName(category)) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+            }
+            
+            // 根据类别ID获取类别名称
+            function getCategoryName(categoryId) {
+                const categories = {
+                    '1': '教育资助',
+                    '2': '老人关怀',
+                    '3': '医疗救助',
+                    '4': '环境保护',
+                    '5': '灾害救援',
+                    '7': '动物保护'
+                };
+                return categories[categoryId] || '';
+            }
+            
+            // 显示搜索结果
+            function displayResults(events) {
+                if (events.length === 0) {
+                    resultsContent.innerHTML = '<div class="no-results"><i class="fas fa-search fa-3x" style="margin-bottom: 15px; color: #ddd;"></i><p>没有找到匹配的活动</p><p>请尝试调整筛选条件</p></div>';
+                    return;
+                }
+                
+                let html = '<ul class="events-list">';
+                
+                events.forEach(event => {
+                    html += `
+                        <li class="event-item">
+                            <h3 class="event-name">${event.name}</h3>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i class="far fa-calendar-alt"></i> ${event.date}
+                                </div>
+                                <div class="event-meta-item">
+                                    <i class="fas fa-map-marker-alt"></i> ${event.location}
+                                </div>
+                                <div class="event-meta-item">
+                                    <i class="fas fa-tag"></i> ${event.category}
+                                </div>
+                                <div class="event-meta-item">
+                                    <i class="fas fa-user-friends"></i> ${event.organization}
+                                </div>
+                            </div>
+                            <p class="event-description">${event.description}</p>
+                            <div class="event-actions">
+                                <a href="event-detail.html?id=${event.id}" class="btn-details">
+                                    <i class="fas fa-info-circle"></i> 查看详情
+                                </a>
+                            </div>
+                        </li>
+                    `;
+                });
+                
+                html += '</ul>';
+                resultsContent.innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html>
