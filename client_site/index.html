@@ -16,7 +16,7 @@
                 <div class="nav-links">
                     <a href="index.html">Home</a>
                     <a href="search.html">Search Event</a>
-                    <a href="event-detail.html">About Us</a>
+                    <a href="#">About Us</a>
                 </div>
             </nav>
         </div>
@@ -79,7 +79,7 @@
 
     <script>
 
-        // 从API获取数据
+        // fetch data
         async function fetchEvents() {
             try {
                 const response = await fetch('http://localhost:3060/api/events');
@@ -118,7 +118,7 @@
                 const today = new Date();
                 // today.setHours(0, 0, 0, 0);
 
-                // 根据数据库中的状态字段确定活动状态
+                // event status
                 let statusClass, statusText;
                 if (event.event_status === 0) {
                     statusClass = 'status-past';
@@ -128,10 +128,10 @@
                     statusText = 'Ongoing';
                 }
 
-                // 格式化日期
+                // format date
                 const formattedDate = `${eventDate.getFullYear()}/${eventDate.getMonth() + 1}/${eventDate.getDate()}`;
 
-                // 创建卡片元素
+                // eventCard
                 const eventCard = document.createElement('div');
                 eventCard.className = 'event-card';
                 eventCard.innerHTML = `
@@ -143,7 +143,7 @@
                             <div class="event-date">${formattedDate}</div>
                             <div class="event-actions">
                                 <span class="event-status ${statusClass}">${statusText}</span>
-                                <a href="detail.html?id=${event.id}" class="btn">查看详情</a>
+                                <a href="detail.html?id=${event.id}" class="btn">More..</a>
                             </div>
                         
                         </div>
@@ -153,7 +153,6 @@
             });
         }
 
-        // 页面加载完成后渲染活动
         document.addEventListener('DOMContentLoaded', fetchEvents);
     </script>
 </body>
